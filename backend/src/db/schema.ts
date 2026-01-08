@@ -19,7 +19,10 @@ export const products = pgTable("products", {
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
   createdAt: timestamp("created_at:", { mode: "date" }).notNull().defaultNow(),
-  updatedAt: timestamp("updated_at:", { mode: "date" }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at:", { mode: "date" })
+    .notNull()
+    .defaultNow()
+    .$onUpdate(() => new Date()),
 });
 
 export const comments = pgTable("comments", {
@@ -40,21 +43,23 @@ export const usersRelations = relations(users, ({ many }) => ({
 }));
 
 export const productsRelations = relations(products, ({ one, many }) => ({
-  users: one(users, {fields: [products.userId], references: [users.id]}),
+  users: one(users, { fields: [products.userId], references: [users.id] }),
   comments: many(comments),
 }));
 
 export const commentsRelations = relations(comments, ({ one }) => ({
-  users: one(users, {fields: [comments.userId], references: [users.id]}),
-  products: one(products, {fields: [comments.productId], references: [products.id]}),
+  users: one(users, { fields: [comments.userId], references: [users.id] }),
+  products: one(products, {
+    fields: [comments.productId],
+    references: [products.id],
+  }),
 }));
 
+export type User = typeof users.$inferSelect;
+export type NewUser = typeof users.$inferInsert;
 
-export type User = typeof users.$inferSelect
-export type NewUser = typeof users.$inferInsert
+export type Product = typeof products.$inferSelect;
+export type NewProduct = typeof products.$inferInsert;
 
-export type Product = typeof products.$inferSelect
-export type NewProduct = typeof products.$inferInsert
-
-export type Comment = typeof comments.$inferSelect
-export type NewComment = typeof comments.$inferInsert
+export type Comment = typeof comments.$inferSelect;
+export type NewComment = typeof comments.$inferInsert;
