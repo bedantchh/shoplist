@@ -1,4 +1,4 @@
-import { pgTable, PgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
 
 export const users = pgTable("users", {
@@ -6,8 +6,8 @@ export const users = pgTable("users", {
   email: text("email").notNull().unique(),
   name: text("name"),
   imageUrl: text("image_url"),
-  createdAt: timestamp("created at:", { mode: "date" }).notNull().defaultNow(),
-  updatedAt: timestamp("updated at:", { mode: "date" }).notNull().defaultNow(),
+  createdAt: timestamp("created_at:", { mode: "date" }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at:", { mode: "date" }).notNull().defaultNow(),
 });
 
 export const products = pgTable("products", {
@@ -18,8 +18,8 @@ export const products = pgTable("products", {
   userId: text("user_id")
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
-  createdAt: timestamp("created at:", { mode: "date" }).notNull().defaultNow(),
-  updatedAt: timestamp("updated at:", { mode: "date" }).notNull().defaultNow(),
+  createdAt: timestamp("created_at:", { mode: "date" }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at:", { mode: "date" }).notNull().defaultNow(),
 });
 
 export const comments = pgTable("comments", {
@@ -31,7 +31,7 @@ export const comments = pgTable("comments", {
   productId: uuid("product_id")
     .notNull()
     .references(() => products.id, { onDelete: "cascade" }),
-  createdAt: timestamp("created at:", { mode: "date" }).notNull().defaultNow(),
+  createdAt: timestamp("created_at:", { mode: "date" }).notNull().defaultNow(),
 });
 
 export const usersRelations = relations(users, ({ many }) => ({
@@ -46,7 +46,7 @@ export const productsRelations = relations(products, ({ one, many }) => ({
 
 export const commentsRelations = relations(comments, ({ one }) => ({
   users: one(users, {fields: [comments.userId], references: [users.id]}),
-  products: one(products, {fields: [comments.userId], references: [products.id]}),
+  products: one(products, {fields: [comments.productId], references: [products.id]}),
 }));
 
 
