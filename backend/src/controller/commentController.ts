@@ -10,6 +10,15 @@ export const createComment = async (req: Request, res: Response) => {
     const { productId } = req.params;
     const { content } = req.body;
 
+    if (!productId) {
+       return res.status(400).json({ error: "Product ID is required" });
+      }
+
+    const product = await queries.getProductById(productId);
+    if (!product) {
+      return res.status(404).json({ error: "Product not found" });
+    }
+
     if (!content) {
       return res.status(400).json({ error: "Content is required" });
     }

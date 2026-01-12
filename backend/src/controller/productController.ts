@@ -105,7 +105,7 @@ export const deleteProduct = async(req: Request, res: Response)=>{
     await queries.deleteProduct(id);
     return res.status(200).json({message:"Product deleted"})
   } catch (error) {
-    console.error("error updating product:",error)
+    console.error("error deleting product:",error)
     res.status(500).json({error:"error deleting product"})
   }
 }
