@@ -1,5 +1,5 @@
 import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/clerk-react';
-import Navbar from './components/navbar';
+import Navbar from './components/Navbar';
 import { Route, Routes } from 'react-router';
 import Homepage from './pages/Homepage';
 import ProductPage from './pages/ProductPage';
