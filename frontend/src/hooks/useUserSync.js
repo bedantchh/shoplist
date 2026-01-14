@@ -11,9 +11,9 @@ const useUserSync = () => {
     const {mutate: syncUserMutation,isPending,isSuccess}=useMutation({mutationFn:syncUser})
 
     useEffect(()=>{
-        if(isSignedIn && user && !isPending && !isSuccess){
+        if(isSignedIn && user && user.primaryEmailAddress && !isPending && !isSuccess){
             syncUserMutation({
-                email:user.primaryEmailAddress.emailAddress,
+                email:user.primaryEmailAddress?.emailAddress,
                 name: user.fullName || user.firstName,
                 imageUrl: user.imageUrl,
             })

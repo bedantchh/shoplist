@@ -11,13 +11,13 @@ export const getAllProducts = async ()=>{
     return data
 }
 
-export const getProductsById = async (id)=>{
+export const getProductById = async (id)=>{
     const {data} = await api.get(`/product/${id}`)
     return data
 }
 
 export const getMyProducts = async ()=>{
-    const {data} = await api.get("/prodcts/my")
+    const {data} = await api.get("/products/my")
     return data
 }
 
@@ -42,7 +42,7 @@ export const createComment = async ({productId, content})=>{
     return data
 }
 
-export const deleteComment = async (commendId)=>{
-    const {data} = await api.delete(`/comment/${commendId}`)
+export const deleteComment = async (commentId)=>{
+    const {data} = await api.delete(`/comments/${commentId}`)
     return data
 }
