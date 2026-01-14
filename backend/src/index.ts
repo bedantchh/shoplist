@@ -9,7 +9,7 @@ import productRoutes from './routes/productRoutes'
 
 const app = express();
 
-app.use(cors({origin:ENV.FE_URL}))
+app.use(cors({origin:ENV.FE_URL,credentials:true}))
 app.use(clerkMiddleware())
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
